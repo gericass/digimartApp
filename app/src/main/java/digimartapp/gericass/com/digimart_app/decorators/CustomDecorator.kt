@@ -20,10 +20,9 @@ class CustomDecorator(private val space: Int) : RecyclerView.ItemDecoration() {
     }
 
     override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
-        val dp8 = space * 2
         outRect.top = space
         outRect.bottom = space
-        outRect.right = dp8
-        outRect.left = dp8
+        outRect.right = space
+        outRect.left = space
     }
 }
