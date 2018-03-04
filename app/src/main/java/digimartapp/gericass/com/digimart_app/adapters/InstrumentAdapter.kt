@@ -11,7 +11,6 @@ import com.squareup.picasso.Picasso
 import digimartapp.gericass.com.digimart_app.R
 import digimartapp.gericass.com.digimart_app.api.model.Instrument
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation
-import android.content.ClipData.Item
 
 
 /**
@@ -19,7 +18,7 @@ import android.content.ClipData.Item
  */
 
 
-class NewArrivalAdapter(private val instruments: List<Instrument>, val f: (Instrument) -> Unit) : RecyclerView.Adapter<NewArrivalAdapter.ViewHolder>() {
+class InstrumentAdapter(var instruments: List<Instrument>, val f: (Instrument) -> Unit) : RecyclerView.Adapter<InstrumentAdapter.ViewHolder>() {
 
     private lateinit var context: Context
 
@@ -45,7 +44,7 @@ class NewArrivalAdapter(private val instruments: List<Instrument>, val f: (Instr
         f(inst)
     }
 
-    class ViewHolder(v: View, private val mAdapter: NewArrivalAdapter) : RecyclerView.ViewHolder(v), View.OnClickListener {
+    class ViewHolder(v: View, private val mAdapter: InstrumentAdapter) : RecyclerView.ViewHolder(v), View.OnClickListener {
         val imageView: ImageView = v.findViewById(R.id.instrument_image)
         private val name: TextView = v.findViewById(R.id.instrument_name)
         private val description: TextView = v.findViewById(R.id.instrument_description)
