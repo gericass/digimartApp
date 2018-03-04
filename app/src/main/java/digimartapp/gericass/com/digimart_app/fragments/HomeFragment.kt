@@ -1,13 +1,17 @@
 package digimartapp.gericass.com.digimart_app.fragments
 
 
+import android.content.Intent
 import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.widget.Toast
 import com.trello.rxlifecycle2.android.lifecycle.kotlin.bindToLifecycle
 import digimartapp.gericass.com.digimart_app.R
+import digimartapp.gericass.com.digimart_app.activities.InstrumentActivity
+import digimartapp.gericass.com.digimart_app.activities.InstrumentActivity_
 import digimartapp.gericass.com.digimart_app.adapters.NewArrivalAdapter
 import digimartapp.gericass.com.digimart_app.api.RetrofitBuilder
 import digimartapp.gericass.com.digimart_app.api.baseURL
@@ -71,7 +75,11 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         recycler.setHasFixedSize(true)
         mLayoutManager = LinearLayoutManager(activity)
         recycler.layoutManager = mLayoutManager
-        val mAdapter = NewArrivalAdapter(instruments)
+        val mAdapter = NewArrivalAdapter(instruments) { inst: Instrument ->
+            val intent = Intent(activity, InstrumentActivity_::class.java)
+            intent.putExtra("instrument", inst)
+            startActivity(intent)
+        }
         recycler.adapter = mAdapter
         recycler.addItemDecoration(CustomDecorator.createDefaultDecoration(activity!!.baseContext))
     }
