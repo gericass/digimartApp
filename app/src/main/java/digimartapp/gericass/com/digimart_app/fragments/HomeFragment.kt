@@ -2,7 +2,7 @@ package digimartapp.gericass.com.digimart_app.fragments
 
 
 import android.content.Intent
-import android.os.Handler
+
 import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
@@ -20,7 +20,7 @@ import digimartapp.gericass.com.digimart_app.api.RetrofitBuilder
 import digimartapp.gericass.com.digimart_app.api.baseURL
 import digimartapp.gericass.com.digimart_app.api.client.NewArrivalClient
 import digimartapp.gericass.com.digimart_app.api.client.SearchClient
-import digimartapp.gericass.com.digimart_app.api.model.Instrument
+import digimartapp.gericass.com.digimart_app.model.Instrument
 import digimartapp.gericass.com.digimart_app.decorators.CustomDecorator
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers

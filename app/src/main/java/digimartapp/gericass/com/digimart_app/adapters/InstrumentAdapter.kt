@@ -9,7 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.squareup.picasso.Picasso
 import digimartapp.gericass.com.digimart_app.R
-import digimartapp.gericass.com.digimart_app.api.model.Instrument
+import digimartapp.gericass.com.digimart_app.model.Instrument
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation
 
 

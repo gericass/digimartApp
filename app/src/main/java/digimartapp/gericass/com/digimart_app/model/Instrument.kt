@@ -1,4 +1,4 @@
-package digimartapp.gericass.com.digimart_app.api.model
+package digimartapp.gericass.com.digimart_app.model
 
 import java.io.Serializable
 
