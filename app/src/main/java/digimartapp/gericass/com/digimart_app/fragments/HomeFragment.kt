@@ -7,14 +7,12 @@ import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.view.Gravity
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
 import com.trello.rxlifecycle2.android.lifecycle.kotlin.bindToLifecycle
-import digimartapp.gericass.com.digimart_app.BuildConfig
 import digimartapp.gericass.com.digimart_app.R
 import digimartapp.gericass.com.digimart_app.activities.InstrumentActivity_
 import digimartapp.gericass.com.digimart_app.adapters.InstrumentAdapter
@@ -26,7 +24,6 @@ import digimartapp.gericass.com.digimart_app.api.model.Instrument
 import digimartapp.gericass.com.digimart_app.decorators.CustomDecorator
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.fragment_home.*
 import org.androidannotations.annotations.AfterViews
 import org.androidannotations.annotations.EFragment
 import org.androidannotations.annotations.ViewById
@@ -62,6 +59,7 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     @AfterViews
     fun init() {
+        setList()
         refresh()
         newArrival()
         initButton()
@@ -70,7 +68,7 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     fun initButton() {
         searchButton.setOnClickListener {
             page = 1
-            search(1)
+            search(page)
         }
     }
 
@@ -108,15 +106,13 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                 R.color.swipe_green,
                 R.color.swipe_orange,
                 R.color.swipe_red)
-
         swipeView.setOnRefreshListener(this)
 
     }
 
     override fun onRefresh() {
-        Toast.makeText(activity, state, Toast.LENGTH_SHORT).show()
         if (state == "new") {
-            updateNewArrival()
+            newArrival()
         } else {
             search(++page)
         }
@@ -124,7 +120,7 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     }
 
-    fun updateNewArrival() {
+    fun newArrival() {
         val request = RetrofitBuilder.build(baseURL)
         val client = request.create(NewArrivalClient::class.java)
         progressBar.visibility = View.VISIBLE
@@ -143,31 +139,12 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                 })
     }
 
-    fun newArrival() {
-        val request = RetrofitBuilder.build(baseURL)
-        val client = request.create(NewArrivalClient::class.java)
-        progressBar.visibility = View.VISIBLE
-        client.getNewArrivalInstruments()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .bindToLifecycle(this)
-                .doAfterTerminate {
-                    progressBar.visibility = View.GONE
-                }
-                .subscribe({
-                    setList(it)
-                }, {
-                    Toast.makeText(activity, "timeout", Toast.LENGTH_SHORT).show()
-                    newArrival()
-                })
-    }
-
-
-    private fun setList(instruments: List<Instrument>) {
+    private fun setList() {
+        val i: List<Instrument> = emptyList()
         recycler.setHasFixedSize(true)
         mLayoutManager = LinearLayoutManager(activity)
         recycler.layoutManager = mLayoutManager
-        mAdapter = InstrumentAdapter(instruments) { inst: Instrument ->
+        mAdapter = InstrumentAdapter(i) { inst: Instrument ->
             val intent = Intent(activity, InstrumentActivity_::class.java)
             intent.putExtra("instrument", inst)
             startActivity(intent)
